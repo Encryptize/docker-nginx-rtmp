@@ -63,6 +63,6 @@ ADD static /www/static
 EXPOSE 80/tcp
 EXPOSE 1935/tcp
 
-VOLUME [ "/dash" ]
+VOLUME [ "/hls" ]
 
 CMD ["nginx", "-g", "daemon off;"]

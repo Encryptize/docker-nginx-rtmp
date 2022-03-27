@@ -3,8 +3,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>dash.js Player</title>
-    <script src="http://cdn.dashjs.org/latest/dash.all.min.js"></script>
+    <title>hls.js Player</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.1.5/hls.min.js" integrity="sha512-O83G0C/Ypje2c3LTYElrDXQaqtKKxtu8WKlMLEMoIFs9HDeI4rMlpnn9AX5xvR3PgJpwSEBrZpxSzfE1usZqiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .container {
             width: 80%;
@@ -26,8 +26,8 @@
   </head>
   <body>
     <div class="container">
-        <h1>dash.js player</h1>
-        <a href="https://github.com/Dash-Industry-Forum/dash.js?">github.com/Dash-Industry-Forum/dash.js</a>
+        <h1>hls.js player</h1>
+        <a href="https://github.com/video-dev/hls.js">https://github.com/video-dev/hls.js</a>
         <div class="video-wrapper">
             <video id="video" controls muted></video>
         </div>
@@ -36,8 +36,17 @@
     <script>
       var params = new URLSearchParams(window.location.search);
       var url = params.get('url');
-      var player = dashjs.MediaPlayer().create();
-      player.initialize(document.querySelector("#video"), url, true);
+      if (Hls.isSupported()) {
+          var video = document.getElementById('video');
+          var hls = new Hls();
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+              hls.loadSource(url);
+              hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+                  video.play();
+              });
+          });
+      }
     </script>
   </body>
 </html>

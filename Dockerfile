@@ -1,7 +1,7 @@
-FROM alpine:3.15 as builder
+FROM alpine:3.16 as builder
 
 # Versions of nginx and nginx-rtmp-module to use
-ENV NGINX_VERSION nginx-1.21.6
+ENV NGINX_VERSION nginx-1.22.0
 ENV NGINX_RTMP_MODULE_VERSION 1.2.2
 
 # Install dependencies
@@ -39,7 +39,7 @@ RUN cd /tmp/build/nginx/${NGINX_VERSION} && \
     mkdir /var/lock/nginx && \
     rm -rf /tmp/build
 
-FROM alpine:3.15
+FROM alpine:3.16
 
 RUN apk update && \
     apk add ca-certificates openssl pcre && \
